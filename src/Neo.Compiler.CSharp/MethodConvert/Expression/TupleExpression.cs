@@ -18,13 +18,13 @@ namespace Neo.Compiler;
 
 partial class MethodConvert
 {
-    private void ConvertAnonymousObjectCreationExpression(SemanticModel model, AnonymousObjectCreationExpressionSyntax expression)
+    private void ConvertTupleExpression(SemanticModel model, TupleExpressionSyntax expression)
     {
-        AddInstruction(OpCode.NEWARRAY0);
-        foreach (AnonymousObjectMemberDeclaratorSyntax initializer in expression.Initializers)
+        AddInstruction(OpCode.NEWSTRUCT0);
+        foreach (ArgumentSyntax argument in expression.Arguments)
         {
             AddInstruction(OpCode.DUP);
-            ConvertExpression(model, initializer.Expression);
+            ConvertExpression(model, argument.Expression);
             AddInstruction(OpCode.APPEND);
         }
     }

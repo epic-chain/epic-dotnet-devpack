@@ -18,14 +18,12 @@ namespace Neo.Compiler;
 
 partial class MethodConvert
 {
-    private void ConvertAnonymousObjectCreationExpression(SemanticModel model, AnonymousObjectCreationExpressionSyntax expression)
+    private void ConvertIsPatternExpression(SemanticModel model, IsPatternExpressionSyntax expression)
     {
-        AddInstruction(OpCode.NEWARRAY0);
-        foreach (AnonymousObjectMemberDeclaratorSyntax initializer in expression.Initializers)
-        {
-            AddInstruction(OpCode.DUP);
-            ConvertExpression(model, initializer.Expression);
-            AddInstruction(OpCode.APPEND);
-        }
+        byte anonymousIndex = AddAnonymousVariable();
+        ConvertExpression(model, expression.Expression);
+        AccessSlot(OpCode.STLOC, anonymousIndex);
+        ConvertPattern(model, expression.Pattern, anonymousIndex);
+        RemoveAnonymousVariable(anonymousIndex);
     }
 }

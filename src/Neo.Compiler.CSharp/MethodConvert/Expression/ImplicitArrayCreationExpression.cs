@@ -11,21 +11,16 @@
 extern alias scfx;
 
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Neo.VM;
 
 namespace Neo.Compiler;
 
 partial class MethodConvert
 {
-    private void ConvertAnonymousObjectCreationExpression(SemanticModel model, AnonymousObjectCreationExpressionSyntax expression)
+    private void ConvertImplicitArrayCreationExpression(SemanticModel model, ImplicitArrayCreationExpressionSyntax expression)
     {
-        AddInstruction(OpCode.NEWARRAY0);
-        foreach (AnonymousObjectMemberDeclaratorSyntax initializer in expression.Initializers)
-        {
-            AddInstruction(OpCode.DUP);
-            ConvertExpression(model, initializer.Expression);
-            AddInstruction(OpCode.APPEND);
-        }
+        IArrayTypeSymbol type = (IArrayTypeSymbol)model.GetTypeInfo(expression).ConvertedType!;
+        ConvertInitializerExpression(model, type, expression.Initializer);
     }
 }

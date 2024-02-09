@@ -11,21 +11,17 @@
 extern alias scfx;
 
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Neo.VM;
 
 namespace Neo.Compiler;
 
 partial class MethodConvert
 {
-    private void ConvertAnonymousObjectCreationExpression(SemanticModel model, AnonymousObjectCreationExpressionSyntax expression)
+    private void ConvertCheckedExpression(SemanticModel model, CheckedExpressionSyntax expression)
     {
-        AddInstruction(OpCode.NEWARRAY0);
-        foreach (AnonymousObjectMemberDeclaratorSyntax initializer in expression.Initializers)
-        {
-            AddInstruction(OpCode.DUP);
-            ConvertExpression(model, initializer.Expression);
-            AddInstruction(OpCode.APPEND);
-        }
+        _checkedStack.Push(expression.Keyword.IsKind(SyntaxKind.CheckedKeyword));
+        ConvertExpression(model, expression.Expression);
+        _checkedStack.Pop();
     }
 }

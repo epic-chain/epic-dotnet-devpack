@@ -18,14 +18,16 @@ namespace Neo.Compiler;
 
 partial class MethodConvert
 {
-    private void ConvertAnonymousObjectCreationExpression(SemanticModel model, AnonymousObjectCreationExpressionSyntax expression)
+    private void ConvertConditionalExpression(SemanticModel model, ConditionalExpressionSyntax expression)
     {
-        AddInstruction(OpCode.NEWARRAY0);
-        foreach (AnonymousObjectMemberDeclaratorSyntax initializer in expression.Initializers)
-        {
-            AddInstruction(OpCode.DUP);
-            ConvertExpression(model, initializer.Expression);
-            AddInstruction(OpCode.APPEND);
-        }
+        JumpTarget falseTarget = new();
+        JumpTarget endTarget = new();
+        ConvertExpression(model, expression.Condition);
+        Jump(OpCode.JMPIFNOT_L, falseTarget);
+        ConvertExpression(model, expression.WhenTrue);
+        Jump(OpCode.JMP_L, endTarget);
+        falseTarget.Instruction = AddInstruction(OpCode.NOP);
+        ConvertExpression(model, expression.WhenFalse);
+        endTarget.Instruction = AddInstruction(OpCode.NOP);
     }
 }
