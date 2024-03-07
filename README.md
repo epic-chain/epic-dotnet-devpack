@@ -1,6 +1,6 @@
 # Epic.NET DevPack
 
-![Epic.NET DevPack Logo](https://example.com/epic-dotnet-devpack-logo.png)
+![Epic.NET DevPack Logo](https://epic-chain/epic-dotnet-devpack-logo.png)
 
 ## Introduction
 
@@ -26,7 +26,7 @@ Welcome to the Epic.NET DevPack repository! This repository contains a comprehen
 
 To start using the Epic.NET DevPack, follow these steps:
 
-1. Clone the repository to your local machine: `git clone https://github.com/epic/epic-dotnet-devpack.git`
+1. Clone the repository to your local machine: `git clone https://github.com/epicchainlabs/epic-dotnet-devpack.git`
 2. Explore the `examples` directory for sample projects and usage scenarios.
 3. Refer to the documentation in the `docs` directory for detailed instructions on setting up your development environment and using the tools and libraries provided.
 
