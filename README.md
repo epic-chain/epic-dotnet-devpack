@@ -38,9 +38,9 @@ We welcome contributions from the community! If you'd like to contribute to the 
 
 Join the Epic.NET community to connect with other developers, share ideas, and get support:
 
-- [Discord](https://discord.gg/epic-net)
+- [Discord](https://discord.com/invite/My3cjaTn)
 - [Forum](https://forum.epic-net.io)
-- [Twitter](https://twitter.com/epic-net)
+- [Twitter](https://twitter.com/epicchainlabs)
 
 ## License
 
